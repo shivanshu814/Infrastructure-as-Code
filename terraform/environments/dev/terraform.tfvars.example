@@ -1,0 +1,17 @@
+# =====================================================
+# Dev Environment Configuration EXAMPLE
+# =====================================================
+# Copy this file to terraform.tfvars and customize!
+# NEVER commit terraform.tfvars (contains secrets)
+
+project_name = "devops-learning"
+environment  = "dev"
+aws_region   = "ap-south-1"
+vpc_cidr     = "10.0.0.0/16"
+
+# Container settings (smaller for dev to save costs)
+backend_cpu     = 256
+backend_memory  = 512
+frontend_cpu    = 256
+frontend_memory = 512
+desired_count   = 1

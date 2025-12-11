@@ -1,0 +1,100 @@
+# ============================================
+# SECRETS & ENVIRONMENT FILES - NEVER COMMIT!
+# ============================================
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+*.secret
+
+# AWS credentials
+.aws/
+credentials
+
+# ============================================
+# Node.js
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Testing
+coverage/
+.nyc_output/
+
+# Cache
+.npm/
+.eslintcache
+.node_repl_history
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ============================================
+# Terraform
+# ============================================
+# State files - contain sensitive data!
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Terraform directories
+.terraform/
+.terraform.lock.hcl
+
+# Variable files (may contain secrets)
+*.tfvars
+!terraform.tfvars.example
+
+# Override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform CLI config
+.terraformrc
+terraform.rc
+
+# ============================================
+# Docker
+# ============================================
+# Docker Compose override
+docker-compose.override.yml
+
+# ============================================
+# Logs
+# ============================================
+*.log
+logs/
+
+# ============================================
+# Backup files
+# ============================================
+*.bak
+*.backup
+*.old

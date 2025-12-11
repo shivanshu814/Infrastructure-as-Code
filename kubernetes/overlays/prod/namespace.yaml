@@ -1,0 +1,10 @@
+# =====================================================
+# Prod Namespace
+# =====================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devops-prod
+  labels:
+    environment: prod
+    app.kubernetes.io/name: devops-learning

@@ -1,0 +1,17 @@
+# =====================================================
+# Prod Environment Configuration EXAMPLE
+# =====================================================
+# Copy this file to terraform.tfvars and customize!
+# NEVER commit terraform.tfvars (contains secrets)
+
+project_name = "devops-learning"
+environment  = "prod"
+aws_region   = "ap-south-1"
+vpc_cidr     = "10.1.0.0/16"
+
+# Container settings (larger for production)
+backend_cpu     = 512
+backend_memory  = 1024
+frontend_cpu    = 256
+frontend_memory = 512
+desired_count   = 2

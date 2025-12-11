@@ -1,0 +1,88 @@
+# =====================================================
+# Prod Environment Kustomization
+# =====================================================
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: devops-prod
+
+resources:
+  - ../../base
+  - namespace.yaml
+  - pdb.yaml
+
+# Prod-specific name prefix
+namePrefix: prod-
+
+# Common labels for prod
+commonLabels:
+  environment: prod
+
+# Prod-specific replicas (higher for availability)
+replicas:
+  - name: backend
+    count: 3
+
+# Prod-specific images
+images:
+  - name: backend
+    newName: your-account.dkr.ecr.ap-south-1.amazonaws.com/devops-backend
+    newTag: prod-latest
+
+# Prod-specific patches
+patches:
+  # Increase resource limits for prod
+  - target:
+      kind: Deployment
+      name: backend
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/cpu
+        value: "1000m"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: "1024Mi"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: "200m"
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: "256Mi"
+
+  # Add anti-affinity for high availability
+  - target:
+      kind: Deployment
+      name: backend
+    patch: |-
+      - op: add
+        path: /spec/template/spec/affinity
+        value:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 100
+                podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      app: backend
+                  topologyKey: kubernetes.io/hostname
+
+  # Increase HPA max replicas for prod
+  - target:
+      kind: HorizontalPodAutoscaler
+      name: backend-hpa
+    patch: |-
+      - op: replace
+        path: /spec/maxReplicas
+        value: 20
+      - op: replace
+        path: /spec/minReplicas
+        value: 3
+
+# Prod-specific ConfigMap
+configMapGenerator:
+  - name: app-config
+    behavior: merge
+    literals:
+      - NODE_ENV=production
+      - LOG_LEVEL=info
+      - API_BASE_URL=https://api.devops.example.com

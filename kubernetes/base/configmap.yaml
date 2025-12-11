@@ -1,0 +1,31 @@
+# =====================================================
+# ConfigMap for Application Configuration
+# =====================================================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  API_BASE_URL: "http://backend:3000"
+
+---
+# =====================================================
+# Secret Example (NEVER commit actual secrets!)
+# =====================================================
+# Create secrets using kubectl:
+# kubectl create secret generic app-secrets \
+#   --from-literal=OPENROUTER_API_KEY=your-key \
+#   --from-literal=FAL_KEY=your-key
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secrets
+type: Opaque
+data:
+  # Base64 encoded values (for demo only - use external secrets in production!)
+  # echo -n "placeholder" | base64
+  OPENROUTER_API_KEY: cGxhY2Vob2xkZXI=
+  FAL_KEY: cGxhY2Vob2xkZXI=
